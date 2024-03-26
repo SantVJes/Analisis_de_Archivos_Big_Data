@@ -7,11 +7,10 @@ import waterfall_chart
 import os
 '''Variables'''
 datos_csv = None
-columnas_selec= []
-zona_A_analizar = None
 '''Funciones'''
 #Declaramos una funcion donde el usuario ingrese el la ruta del archivo csv
 def validar_archivo_csv():
+    
     while True:
         ruta_archivo = input("Ingrese la ruta del archivo CSV: ")
         if ruta_archivo: # Validamos si la ruta es valida
@@ -27,7 +26,13 @@ def validar_archivo_csv():
 
 # Declaramos la funcion para Selecionar la zona y columnas del Archivo CVS para analizar
 def seleccion_zona_y_columnas(datos_csv):
+    '''Variables'''
     columnas_a_analizar = []
+    zonas = None
+    selec_zona = None
+    columnas = None
+    num_columnas = None
+    
     while True: # bucle por si el usuario selecione una zona invalida 
         zonas = datos_csv["zona"].unique() 
         print("Zonas del archivo CSV:") 
@@ -36,7 +41,8 @@ def seleccion_zona_y_columnas(datos_csv):
         
         selec_zona = input("\nPor favor, Ingresa el nombre de la zona que desea analizar: ")
         if selec_zona in zonas: # Verifica si la zona eliguida es valida 
-            print(f"\nHas seleccionado la zona '{selec_zona}' para analizar.")    
+            print(f"\nHas seleccionado la zona '{selec_zona}' para analizar.")
+            selec_zona = datos_csv[datos_csv["zona"]== selec_zona] 
             # Selección de columnas
             while True: # bucle por si el usuario selecione una columna o una cantidad de columnas a analizar invalida
                 columnas = datos_csv.select_dtypes(include='float').columns
@@ -56,9 +62,12 @@ def seleccion_zona_y_columnas(datos_csv):
                 if num_columnas <= 0 or num_columnas > len(columnas): 
                     os.system('clear') # Limpia la consola
                     print("Error: El numero de columnas a analizar no es valido.")
-                print("\nPor favor, ingrese el nombre de las columnas a analizar:")
-                for k in range(num_columnas): #
-                    while True:
+                if num_columnas == len(columnas) :
+                    columnas_a_analizar= columnas
+                else:
+                    print("\nPor favor, ingrese el nombre de las columnas a analizar:")
+                    for k in range(num_columnas): #
+                      while True:
                         print("\nColumnas disponibles a analizar:")
                         for i in range(len(columnas)): # Muestra las columnas disponibles para seleccionar
                             print(f"{i+1}.{columnas[i]}")
@@ -69,20 +78,66 @@ def seleccion_zona_y_columnas(datos_csv):
                             break
                         else:
                             os.system('clear') # Limpia la consola
-                            print(f"Error: La columna '{nombre_columna}' no existe en el archivo CSV.") 
-                                          
+                            print(f"Error: La columna '{nombre_columna}' no existe en el archivo CSV.")    
                 break  # Salir del bucle while de selección de columnas
-            
             return selec_zona, columnas_a_analizar
         else:
             os.system('clear') # Limpia la consola
             print("\nLa zona seleccionada no es válida. Por favor, intente nuevamente.\n")
+ 
+#Funcion para mostrar las opciones a realizar 
+def mostrar_menu():
+    print("1. Promedio del costo a la tarifa de gas para los años 2016 y 2017")
+    print("2. Variación del precio del gas natural a lo largo de dos años")
+    print("3. Demanda promedio del gas natural para 2016")
+    print("4. Demanda promedio del gas natural para 2017")
+    print("5. Tarifas máximas por año")
+    print("7. Salir")
+ 
   
-    
-'''Codijo_Principal'''
+#Declaramos la funcion para validar datos(Columnas a promediar y promediar las columnas de datos tarifarios
+def promedio_costo_gas_2016_2017(datos_csv):
+    '''Variables'''
+    zona_A_analizar = None
+    columnas_selec = []
+    promedio_columnas = []
+    iterador1= 0
+    zona_A_analizar , columnas_selec =  seleccion_zona_y_columnas(datos_csv) #extraemos las columanas y la zona analizar
 
+    while iterador1 < len(columnas_selec) : #while donde sacamos el promedio de los 2 años columnasde la zona donde seleciono el usuario
+        promedio_columnas.append(zona_A_analizar[columnas_selec[iterador1]].sum() / zona_A_analizar[columnas_selec[iterador1]].count())
+        iterador1 +=1
+        
+            
+    
+     
+    
+
+
+
+'''Codijo_Principal'''
+print("Bienvenidos AL Programa Para Analizar Su Archivo CSV")
 datos_csv = validar_archivo_csv()
 
-zona_A_analizar , columnas_selec =seleccion_zona_y_columnas(datos_csv)
+while True:
+        print("Menu de Analisis del Archivo CSV")
+        mostrar_menu()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+           promedio_costo_gas_2016_2017(datos_csv) 
+        #elif opcion == "2":
+         #   variacion_precio_gas()
+        #elif opcion == "3":
+         #   demanda_promedio_gas_2016()
+        #elif opcion == "4":
+         #   demanda_promedio_gas_2017()
+        #elif opcion == "5":
+         #   tarifas_maximas_por_ano()
+        elif opcion == "6":
+            print("Saliendo del programa...")
+            break
+        else:
+            os.system('clear')
+            print("Opción no válida. Por favor, seleccione una opción válida.")
 
 
