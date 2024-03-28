@@ -103,14 +103,34 @@ def promedio_costo_gas_2016_2017(datos_csv):
     promedio_columnas = []
     iterador1= 0
     zona_A_analizar , columnas_selec =  seleccion_zona_y_columnas(datos_csv) #extraemos las columanas y la zona analizar
-
     while iterador1 < len(columnas_selec) : #while donde sacamos el promedio de los 2 años columnasde la zona donde seleciono el usuario
         promedio_columnas.append(zona_A_analizar[columnas_selec[iterador1]].sum() / zona_A_analizar[columnas_selec[iterador1]].count())
         iterador1 +=1
         
             
+#Declaramos Fucion que calcule la variacion porcentual del precio de gas alo largo de los 2 años
+def variacion_porcentual_precio_gas_2016_2017(datos_csv):
+    '''Variables'''
+    zona_A_analizar = None
+    columnas_selec_variacion = []
+    variacion_porcentual_columnas = []
+    iterador1= 0
+    zona_A_analizar, columnas_selec_variacion = seleccion_zona_y_columnas(datos_csv)
+    while iterador1 < len(columnas_selec_variacion):# while Precios del gas natural al inicio y al final de los dos años de una misma columna donde lo multiplacamos por 100 para tener el porcentaje de la variacion 
+        variacion_porcentual_columnas.append( ((zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[-1] - zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[0]) / zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[0])* 100 ) 
+        iterador1 += 1
     
-     
+#Declaramos la funcion para la demanda pormedio del precio del gas año 2016
+
+#def demanda_promedio_gas_2016(datos_csv):
+    #Conviertimos las columnas de fecha a tipo datetime
+ #   datos_csv['fecha_inicio'] = pd.to_datetime(datos_csv['fecha_inicio'])
+  #  zona_A_analizar, columnas_selec_variacion = seleccion_zona_y_columnas(datos_csv[datos_csv['fecha_inicio'].dt.year == 2016]) 
+   # print(zona_A_analizar[columnas_selec_variacion[0]])
+    
+    
+    
+# end def
     
 
 
@@ -125,10 +145,10 @@ while True:
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
            promedio_costo_gas_2016_2017(datos_csv) 
-        #elif opcion == "2":
-         #   variacion_precio_gas()
-        #elif opcion == "3":
-         #   demanda_promedio_gas_2016()
+        elif opcion == "2":
+           variacion_porcentual_precio_gas_2016_2017(datos_csv)
+        elif opcion == "3":
+           demanda_promedio_gas_2016(datos_csv)
         #elif opcion == "4":
          #   demanda_promedio_gas_2017()
         #elif opcion == "5":
