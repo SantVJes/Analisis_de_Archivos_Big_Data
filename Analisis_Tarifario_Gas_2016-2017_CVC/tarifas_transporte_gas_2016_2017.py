@@ -103,8 +103,8 @@ def promedio_costo_gas_2016_2017(datos_csv):
     promedio_columnas = []
     iterador1= 0
     zona_A_analizar , columnas_selec =  seleccion_zona_y_columnas(datos_csv) #extraemos las columanas y la zona analizar
-    while iterador1 < len(columnas_selec) : #while donde sacamos el promedio de los 2 años columnasde la zona donde seleciono el usuario
-        promedio_columnas.append(zona_A_analizar[columnas_selec[iterador1]].sum() / zona_A_analizar[columnas_selec[iterador1]].count())
+    while iterador1 < len(columnas_selec) : #while donde sacamos el promedio con el metodo mean
+        promedio_columnas.append(zona_A_analizar[columnas_selec[iterador1]].mean())
         iterador1 +=1
         
             
@@ -120,17 +120,29 @@ def variacion_porcentual_precio_gas_2016_2017(datos_csv):
         variacion_porcentual_columnas.append( ((zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[-1] - zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[0]) / zona_A_analizar[columnas_selec_variacion[iterador1]].iloc[0])* 100 ) 
         iterador1 += 1
     
-#Declaramos la funcion para la demanda pormedio del precio del gas año 2016
+#Declaramos la funcion para la demanda promedio pues es la unica que es posible calcular con esste archivo del precio del gas año 2016
 
-#def demanda_promedio_gas_2016(datos_csv):
-    #Conviertimos las columnas de fecha a tipo datetime
- #   datos_csv['fecha_inicio'] = pd.to_datetime(datos_csv['fecha_inicio'])
-  #  zona_A_analizar, columnas_selec_variacion = seleccion_zona_y_columnas(datos_csv[datos_csv['fecha_inicio'].dt.year == 2016]) 
-   # print(zona_A_analizar[columnas_selec_variacion[0]])
+def demanda_promedio_gas(datos_csv,fecha):
+    '''Variables'''
+    zona_A_analizar = None
+    columnas_selec = []
+    iterador1 = 0
+    demanda_promedio = []
+    demanda_total = None
+    # Calculamos el número de días en 2016
+    dias_del_ano = pd.to_datetime(f'{fecha}-12-31') - pd.to_datetime(f'{fecha}-01-01')
+    dias_del_ano = dias_del_ano.days + 1
+    #Conviertimos las columnas de fecha a tipo datetime y la mandamos ala funcion de seleccion de zona y columna
+    datos_csv['fecha_inicio'] = pd.to_datetime(datos_csv['fecha_inicio'])
+    zona_A_analizar, columnas_selec = seleccion_zona_y_columnas(datos_csv[datos_csv['fecha_inicio'].dt.year == fecha]) 
+    while iterador1 < len(columnas_selec) :#while para la demanda de las columans para sacar el porcentaje de demanda promedio
+        # Calculamos la demanda total para 2016 para cada columna selecionada '
+        demanda_total = zona_A_analizar[columnas_selec[iterador1]].sum()
+        demanda_promedio.append((demanda_total / dias_del_ano)* 100)
+        iterador1 += 1 
     
-    
-    
-# end def
+
+   
     
 
 
@@ -140,19 +152,20 @@ print("Bienvenidos AL Programa Para Analizar Su Archivo CSV")
 datos_csv = validar_archivo_csv()
 
 while True:
-        print("Menu de Analisis del Archivo CSV")
+        print("Menu de Analisis del Archivo CSV ")
         mostrar_menu()
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Seleccione una opción analizar y graficar: ")
         if opcion == "1":
            promedio_costo_gas_2016_2017(datos_csv) 
         elif opcion == "2":
            variacion_porcentual_precio_gas_2016_2017(datos_csv)
         elif opcion == "3":
-           demanda_promedio_gas_2016(datos_csv)
-        #elif opcion == "4":
-         #   demanda_promedio_gas_2017()
+           demanda_promedio_gas(datos_csv,2016)
+        
+        elif opcion == "4":
+           demanda_promedio_gas(datos_csv,2017)
         #elif opcion == "5":
-         #   tarifas_maximas_por_ano()
+           tarifas_maximas_por_ano()
         elif opcion == "6":
             print("Saliendo del programa...")
             break
