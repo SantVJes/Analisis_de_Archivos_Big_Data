@@ -1,7 +1,16 @@
 En este repositorio, encontrarás archivos CSV que están siendo analizados utilizando tecnologías de Big Data con el lenguaje de programación Python, específicamente en la versión 3.12.2 
 
 
-Descripción de la primera  carpeta "Análisis de archivo de gas natural 2016-2017" :
+####------------------Descripción de la carpeta "Analisis_de_Guardaria_2022_CVC_Con_R" :-------------------------------------------###
+
+En esta carpeta Encontraras un Analisis de un Archivo CSV de Encuestas de una Guardaria donde seran Analisados por medio del Lenguaje de Programacion R
+s
+
+
+
+
+
+####------------------Descripción de la  carpeta "Análisis de archivo de gas natural 2016-2017" :-------------------------------------------###
 
 1.Análisis de archivo de gas natural 2016-2017:
 En esta carpeta encontrarás un análisis de un archivo CSV donde se extraen datos para ser graficados, permitiendo así interpretar los datos contenidos en dicho archivo.
@@ -35,4 +44,7 @@ Toma de Decisiones Informada: Al visualizar los datos de manera clara y concisa,
 Propuesta de Visualización:
 
 Para visualizar la variación porcentual del costo del transporte del gas a lo largo de los años, se puede utilizar un gráfico de línea. Este gráfico mostrará la tendencia general de la variación porcentual a lo largo del tiempo. Además, se puede utilizar un gráfico de barras para comparar la variación porcentual entre diferentes zonas. Cada barra representará la variación porcentual de una zona específica, facilitando la comparación entre ellas
+
+
+
 
