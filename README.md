@@ -6,7 +6,19 @@ En este repositorio, encontrarás archivos CSV que están siendo analizados util
 En esta carpeta Encontraras un Analisis de un Archivo CSV de Encuestas de una Guardaria donde seran Analisados por medio del Lenguaje de Programacion R
 s
 
+Descripcion de las funciones que se encuentra en el archivo Analisis_Encuesta_Guarderias.R
 
+1.limpiar_cvs_de_columans_vacias: Esta función toma un dataframe como entrada y elimina las columnas que contienen valores NA (vacíos). Retorna un nuevo dataframe sin esas columnas.
+
+2.contabilizar_delegaciones: Esta función toma como entrada una columna que representa las delegaciones y cuenta cuántas veces aparece cada delegación. Luego identifica las delegaciones con el máximo número de participaciones y devuelve un dataframe con esas delegaciones y su número de participaciones.
+
+3.porcentaje_participacion_por_delegacion: Toma dos columnas como entrada: una columna de delegaciones y otra de preguntas. Calcula el porcentaje de participación por delegación, es decir, cuántas preguntas fueron respondidas en promedio por cada delegación. Retorna un dataframe con la delegación y su respectivo porcentaje de participación.
+
+4.preguntas_menos_respondidas: Toma un dataframe que contiene preguntas como entrada. Identifica las preguntas menos respondidas en relación con el resto, es decir, aquellas con un número de valores NA por encima del promedio. Retorna un dataframe con el nombre de las preguntas y la cantidad de personas que no respondieron cada pregunta.
+
+5.porcentaje_preguntas_contestadas_por_localidad: Toma dos columnas como entrada: una columna de delegaciones y otra de preguntas. Calcula el porcentaje de preguntas contestadas al 100% por cada delegación. Retorna un dataframe con la delegación y el porcentaje de preguntas contestadas.
+
+6.graficar_datos: Esta función toma un dataframe y un tipo de gráfico como entrada y crea una gráfica correspondiente. Puede generar gráficos de barras, líneas, puntos o circulares, según la opción seleccionada
 
 
 
